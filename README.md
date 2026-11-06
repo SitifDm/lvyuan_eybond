@@ -17,45 +17,51 @@ Custom integration for local monitoring and control of **LVYUAN** hybrid inverte
 
 ## 🛠️ Physical Connection
 
-The connection requires a **custom-made USB-to-RJ45 adapter** using a phone charger cable and a standard console cable.
+The connection requires a **custom-made USB-to-RJ45 adapter** using a phone charger cable and a standard console cable. This method ensures a stable, direct RS-232 connection without relying on the inverter's built-in Wi-Fi logger.
 
 ### Required Components:
-1. **USB phone charger cable** (USB-A to micro-USB/USB-C) - will be cut and modified
-2. **RJ-45 keystone jack** (wall socket)
-3. **USB-to-RS232 console cable with RJ-45 connector** (commonly used for Cisco/MikroTik switches)
-4. **Short RJ-45 patch cord** (optional, for convenience)
+- **USB phone charger cable** (USB-A to micro-USB/USB-C) – will be cut and modified.
+- **RJ-45 keystone jack** (wall socket module).
+- **USB-to-RS232 console cable with RJ-45 connector** (commonly used for Cisco/MikroTik switches).
+- **Short RJ-45 patch cord** (optional, for convenience).
 
 ### Step 1: Create USB-to-RJ45 Adapter
-
-1. Take a USB phone charger cable and **cut off one end** (the micro-USB/USB-C side), leaving the USB-A connector.
+1. Take a USB phone charger cable and **cut off one end** (the micro-USB/USB-C side), leaving the USB-A connector intact.
 2. **Insert the USB-A connector into the WIFI port** on the inverter.
-3. On the cut end, you will find 4 wires. Measure voltages to identify them:
+3. On the cut end, you will find 4 wires. Measure voltages with a multimeter to identify them:
    - ⚫ **Black** = GND (Ground)
    - 🩷 **Pink** = +5V (VCC, power)
-   - 🔵 **Blue** = TX (Inverter transmit, RS-232 signal, approximately -5V)
-   - ⚪ **White** = RX (Inverter receive, approximately 0V)
+   - 🔵 **Blue** = TX (Inverter transmit, RS-232 signal, approx. -5V)
+   - ⚪ **White** = RX (Inverter receive, approx. 0V)
 
 ### Step 2: Wire the RJ-45 Keystone Jack
-
-Connect the wires from the USB cable to the RJ-45 keystone jack:
+Connect the wires from the cut USB cable to the RJ-45 keystone jack according to this table:
 
 | USB Cable Wire | Signal | RJ-45 Pin | Notes |
 |----------------|--------|-----------|-------|
 | ⚫ **Black**   | GND    | Pin 4 or 5 | Ground |
-| 🔵 **Blue**    | TX (Inverter) | Pin 3 | Goes to RX of adapter |
-| ⚪ **White**   | RX (Inverter) | Pin 6 | Goes to TX of adapter |
+| 🔵 **Blue**    | TX (Inverter) | Pin 3 | Connects to RX of the console adapter |
+| ⚪ **White**   | RX (Inverter) | Pin 6 | Connects to TX of the console adapter |
 | 🩷 **Pink**    | +5V (VCC) | **DO NOT CONNECT** | ⚠️ **Insulate this wire!** |
 
-> ⚠️ **Critical:** Never connect the +5V (Pink) wire to the RJ-45 jack. This is power only for the original logger. Connecting it to your USB adapter can damage the inverter port or your Home Assistant device.
+> ⚠️ **Critical:** Never connect the +5V (Pink) wire to the RJ-45 jack. This line provides power only for the original Wi-Fi logger. Connecting it to your USB adapter can damage the inverter port or your Home Assistant device.
 
 ### Step 3: Connect Console Cable
-
-1. Take the **USB-to-RS232 console cable** with RJ-45 connector.
-2. Insert the RJ-45 connector into the keystone jack (directly or via short patch cord).
-3. **Plug the USB end of the console cable into your Home Assistant device** (TV box, Raspberry Pi, etc.).
+1. Take the **USB-to-RS232 console cable** with the RJ-45 connector.
+2. Insert the RJ-45 connector into the keystone jack (directly or via a short patch cord).
+3. **Plug the USB end of the console cable into your Home Assistant device** (TV box, Raspberry Pi, NUC, etc.).
 
 ### Final Connection Diagram:
-> ⚠️ **Important:** Never connect the +5V (VCC) wire from the USB cable to the inverter. This can damage the inverter port or USB adapter. Use only TX, RX, and GND.
+```text
+[Inverter WIFI Port (USB)]
+       ↓ (Cut USB Charger Cable)
+[Wires: Black=GND, Blue=TX, White=RX, Pink=+5V (Insulated)]
+       ↓ (Wired to RJ-45 Keystone Jack)
+[RJ-45 Jack: Pin 4/5=GND, Pin 3=RX, Pin 6=TX]
+       ↓ (Standard Console Cable)
+[USB-to-RS232 Adapter]
+       ↓ (USB Cable)
+[Home Assistant Device (e.g., TV Box)]
 
 **Port Settings:** `9600` baud, `8` data bits, `None` parity, `1` stop bit (`9600 8N1`).
 
