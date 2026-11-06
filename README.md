@@ -62,6 +62,7 @@ Connect the wires from the cut USB cable to the RJ-45 keystone jack according to
 [USB-to-RS232 Adapter]
        ↓ (USB Cable)
 [Home Assistant Device (e.g., TV Box)]
+```
 
 **Port Settings:** `9600` baud, `8` data bits, `None` parity, `1` stop bit (`9600 8N1`).
 
