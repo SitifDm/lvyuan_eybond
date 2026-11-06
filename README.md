@@ -17,17 +17,44 @@ Custom integration for local monitoring and control of **LVYUAN** hybrid inverte
 
 ## 🛠️ Physical Connection
 
-Connection uses a standard **USB-to-RS232 console cable with RJ-45 connector** (commonly used for Cisco/MikroTik switches).
+The connection requires a **custom-made USB-to-RJ45 adapter** using a phone charger cable and a standard console cable.
 
-### Wiring Diagram (for inverter WIFI/BMS port):
+### Required Components:
+1. **USB phone charger cable** (USB-A to micro-USB/USB-C) - will be cut and modified
+2. **RJ-45 keystone jack** (wall socket)
+3. **USB-to-RS232 console cable with RJ-45 connector** (commonly used for Cisco/MikroTik switches)
+4. **Short RJ-45 patch cord** (optional, for convenience)
 
-| RJ-45 Pin | Inverter Signal | USB Cable Wire | USB Adapter Pin |
-|-----------|-----------------|----------------|-----------------|
-| **Pin 2** | TX (Transmit)   | Blue           | RX (Receive)    |
-| **Pin 3** | RX (Receive)    | White          | TX (Transmit)   |
-| **Pin 4/5**| GND (Ground)   | Black          | GND             |
-| *Pin 1*   | *+5V (VCC)*     | *Pink*         | **DO NOT CONNECT!** |
+### Step 1: Create USB-to-RJ45 Adapter
 
+1. Take a USB phone charger cable and **cut off one end** (the micro-USB/USB-C side), leaving the USB-A connector.
+2. **Insert the USB-A connector into the WIFI port** on the inverter.
+3. On the cut end, you will find 4 wires. Measure voltages to identify them:
+   - ⚫ **Black** = GND (Ground)
+   - 🩷 **Pink** = +5V (VCC, power)
+   - 🔵 **Blue** = TX (Inverter transmit, RS-232 signal, approximately -5V)
+   - ⚪ **White** = RX (Inverter receive, approximately 0V)
+
+### Step 2: Wire the RJ-45 Keystone Jack
+
+Connect the wires from the USB cable to the RJ-45 keystone jack:
+
+| USB Cable Wire | Signal | RJ-45 Pin | Notes |
+|----------------|--------|-----------|-------|
+| ⚫ **Black**   | GND    | Pin 4 or 5 | Ground |
+| 🔵 **Blue**    | TX (Inverter) | Pin 3 | Goes to RX of adapter |
+| ⚪ **White**   | RX (Inverter) | Pin 6 | Goes to TX of adapter |
+| 🩷 **Pink**    | +5V (VCC) | **DO NOT CONNECT** | ⚠️ **Insulate this wire!** |
+
+> ⚠️ **Critical:** Never connect the +5V (Pink) wire to the RJ-45 jack. This is power only for the original logger. Connecting it to your USB adapter can damage the inverter port or your Home Assistant device.
+
+### Step 3: Connect Console Cable
+
+1. Take the **USB-to-RS232 console cable** with RJ-45 connector.
+2. Insert the RJ-45 connector into the keystone jack (directly or via short patch cord).
+3. **Plug the USB end of the console cable into your Home Assistant device** (TV box, Raspberry Pi, etc.).
+
+### Final Connection Diagram:
 > ⚠️ **Important:** Never connect the +5V (VCC) wire from the USB cable to the inverter. This can damage the inverter port or USB adapter. Use only TX, RX, and GND.
 
 **Port Settings:** `9600` baud, `8` data bits, `None` parity, `1` stop bit (`9600 8N1`).
