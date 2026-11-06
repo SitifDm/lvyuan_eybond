@@ -91,6 +91,7 @@ Connect the wires from the cut USB cable to the RJ-45 keystone jack according to
    - **Scan interval**: `5` seconds (recommended).
    - **Timeout**: `3` seconds.
 4. Click **Submit**. The integration will automatically verify the connection to the inverter.
+![Configuration screen](settings.png)
 
 ## 📊 Available Entities
 
