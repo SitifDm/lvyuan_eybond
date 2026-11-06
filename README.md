@@ -91,8 +91,7 @@ Connect the wires from the cut USB cable to the RJ-45 keystone jack according to
    - Scan interval: 5 seconds
    - Timeout: 3 seconds
 4. Click Submit
-
-![Configuration screen](settings.png)
+<img width="700" height="810" alt="settings" src="https://github.com/user-attachments/assets/2b5c7714-02b5-464f-ad78-055bc68d1703" />
 
 
 ## 📊 Available Entities
