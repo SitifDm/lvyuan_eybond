@@ -119,55 +119,72 @@ The integration creates the following entity groups:
 1. Verify the port is correctly identified (`/dev/ttyUSB0`). Check Home Assistant logs or run `dmesg | grep tty` in terminal.
 2. Ensure the cable is securely connected and TX/RX wiring is correct (try swapping TX and RX if no response).
 3. Verify the `homeassistant` user has read/write permissions for the port:
-   ```bash
-   sudo usermod -a -G dialout homeassistant
-   sudo reboot
-   Data not updating or shows "unavailable"
-Check if the port is occupied by another program (e.g., Python script, screen, minicom, or another integration instance).
-NAK response to commands
-TX and RX may be swapped. Try reversing the connections.
-Timeout errors
-Ensure no other process is using the serial port.
-Check cable connections and port settings (9600 8N1).
-📝 Development
-Project Structure
-custom_components/lvyuan_eybond/
-├── __init__.py          # Integration setup and services
-├── binary_sensor.py     # Binary sensors
-├── client.py            # Base client and exceptions
-├── client_serial.py     # Serial client (pyserial)
-├── config_flow.py       # UI configuration flow
-├── const.py             # Constants and mappings
-├── coordinator.py       # Data coordinator with fast/slow cycles
-├── manifest.json        # Integration manifest
-├── number.py            # Number entities (settings)
-├── select.py            # Select entities
-├── sensor.py            # Sensor entities
-├── services.yaml        # Service definitions
-├── strings.json         # Translation strings template
-├── switch.py            # Switch entities
-├── brand/               # Brand icons for HA UI
-│   ├── icon.png         # 96x96 icon
-│   ├── logo.png         # 512x512 logo
-│   └── dark_icon.png    # 96x96 icon for dark theme
-└── translations/        # UI translations
-    ├── en.json          # English translations
-    └── ru.json          # Russian translations
-Key Technical Details
-Protocol: EyeBond G-ASCII (text-based commands terminated with \r)
-Polling Strategy: Fast cycle (5s) for telemetry, slow cycle (5min) for settings
-Dependencies: pyserial==3.5
-Minimum HA Version: 2024.1.0
-🤝 Contributing
+
+        sudo usermod -a -G dialout homeassistant
+        sudo reboot
+
+### Data not updating or shows "unavailable"
+- Check if the port is occupied by another program (e.g., Python script, `screen`, `minicom`, or another integration instance).
+
+### NAK response to commands
+- TX and RX may be swapped. Try reversing the connections.
+
+### Timeout errors
+- Ensure no other process is using the serial port.
+- Check cable connections and port settings (9600 8N1).
+
+## 📝 Development
+
+### Project Structure
+
+    custom_components/lvyuan_eybond/
+    ├── __init__.py          # Integration setup and services
+    ├── binary_sensor.py     # Binary sensors
+    ├── client.py            # Base client and exceptions
+    ├── client_serial.py     # Serial client (pyserial)
+    ├── config_flow.py       # UI configuration flow
+    ├── const.py             # Constants and mappings
+    ├── coordinator.py       # Data coordinator with fast/slow cycles
+    ├── manifest.json        # Integration manifest
+    ├── number.py            # Number entities (settings)
+    ├── select.py            # Select entities
+    ├── sensor.py            # Sensor entities
+    ├── services.yaml        # Service definitions
+    ├── strings.json         # Translation strings template
+    ├── switch.py            # Switch entities
+    ├── brand/               # Brand icons for HA UI
+    │   ├── icon.png         # 96x96 icon
+    │   ├── logo.png         # 512x512 logo
+    │   └── dark_icon.png    # 96x96 icon for dark theme
+    └── translations/        # UI translations
+        ├── en.json          # English translations
+        └── ru.json          # Russian translations
+
+### Key Technical Details
+- **Protocol**: EyeBond G-ASCII (text-based commands terminated with `\r`)
+- **Polling Strategy**: Fast cycle (5s) for telemetry, slow cycle (5min) for settings
+- **Dependencies**: `pyserial==3.5`
+- **Minimum HA Version**: 2024.1.0
+
+## 🤝 Contributing
+
 Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
-📜 License
-This project is licensed under the MIT License. See the LICENSE file for details.
-🙏 Acknowledgments
-Home Assistant community and HACS developers
-Enthusiasts reverse-engineering Must/Voltronic and EyeBond G-ASCII protocols
-📺 Video Tutorial
-Check out the detailed setup and review video tutorial on the Solar Разбор YouTube channel (in Russian):
-🔗 Subscribe to Solar Разбор on YouTube
-📧 Contact & Community
-GitHub: @SitifDm
-YouTube: Solar Разбор
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Home Assistant community and HACS developers
+- Enthusiasts reverse-engineering Must/Voltronic and EyeBond G-ASCII protocols
+
+## 📺 Video Tutorial
+
+Check out the detailed setup and review video tutorial on the **Solar Разбор** YouTube channel (in Russian):  
+🔗 **[Subscribe to Solar Разбор on YouTube](https://www.youtube.com/@SolarRazbor)**
+
+## 📧 Contact & Community
+
+- **GitHub**: [@SitifDm](https://github.com/SitifDm)
+- **YouTube**: [Solar Разбор](https://www.youtube.com/@SolarRazbor)
