@@ -81,17 +81,19 @@ Connect the wires from the cut USB cable to the RJ-45 keystone jack according to
 1. Copy the `custom_components/lvyuan_eybond` folder to `<config_dir>/custom_components/` in your Home Assistant.
 2. Restart Home Assistant.
 
-## ⚙️ Configuration
+## Configuration
 
-1. Go to **Settings** → **Devices & Services** → **Add Integration**.
-2. Search for **LVYUAN Inverter (EyeBond G-ASCII)**.
+1. Go to Settings -> Devices & Services -> Add Integration
+2. Search for LVYUAN Inverter (EyeBond G-ASCII)
 3. Enter connection parameters:
-   - **Serial device**: e.g., `/dev/ttyUSB0` (or `COM3` on Windows).
-   - **Baud rate**: `9600` (fixed for this protocol).
-   - **Scan interval**: `5` seconds (recommended).
-   - **Timeout**: `3` seconds.
-4. Click **Submit**. The integration will automatically verify the connection to the inverter.
-![Configuration Form](setting.png)
+   - Serial device: /dev/ttyUSB0 (or COM3 on Windows)
+   - Baud rate: 9600
+   - Scan interval: 5 seconds
+   - Timeout: 3 seconds
+4. Click Submit
+
+![Configuration screen](settings.png)
+
 
 ## 📊 Available Entities
 
