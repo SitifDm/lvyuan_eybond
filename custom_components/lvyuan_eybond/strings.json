@@ -1,0 +1,160 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "LVYUAN Inverter (EyeBond G-ASCII)",
+        "description": "Configure a LVYUAN inverter connected via USB-to-RS232 adapter. The WIFI port on the inverter uses RS-232 protocol at 9600 baud.",
+        "data": {
+          "name": "Name",
+          "serial_device": "Serial device (e.g. /dev/ttyUSB0)",
+          "baudrate": "Baud rate",
+          "scan_interval": "Scan interval (seconds)",
+          "timeout": "Timeout (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the inverter. Check the serial port and cable."
+    },
+    "abort": {
+      "already_configured": "This inverter is already configured"
+    }
+  },
+  "options": {
+    "error": {
+      "cannot_connect": "Failed to connect to the inverter. Check the serial port and cable."
+    },
+    "step": {
+      "init": {
+        "title": "LVYUAN options",
+        "data": {
+          "serial_device": "Serial device",
+          "baudrate": "Baud rate",
+          "scan_interval": "Scan interval (seconds)",
+          "timeout": "Timeout (seconds)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "baudrate": {
+      "options": {
+        "9600": "9600 baud"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "battery_charging": { "name": "Battery charging" },
+      "battery_discharging": { "name": "Battery discharging" },
+      "pv_charging": { "name": "PV charging" },
+      "equalization_enabled": { "name": "Equalization enabled" },
+      "fan1_stopped": { "name": "Fan 1 stopped" },
+      "fan2_stopped": { "name": "Fan 2 stopped" },
+      "fault": { "name": "Fault" },
+      "warning": { "name": "Warning" },
+      "pv_tracking": { "name": "PV tracking" },
+      "pv_chargeable": { "name": "PV chargeable" }
+    },
+    "number": {
+      "battery_bulk_voltage": { "name": "Battery bulk voltage" },
+      "battery_float_voltage": { "name": "Battery float voltage" },
+      "battery_under_voltage": { "name": "Battery under voltage" },
+      "battery_overvoltage_alarm": { "name": "Battery overvoltage alarm" }
+    },
+    "sensor": {
+      "operating_mode": { "name": "Operating mode" },
+      "software_version": { "name": "Software version" },
+      "grid_voltage": { "name": "Grid voltage" },
+      "grid_frequency": { "name": "Grid frequency" },
+      "inverter_voltage": { "name": "Inverter voltage" },
+      "output_voltage": { "name": "Output voltage" },
+      "output_frequency": { "name": "Output frequency" },
+      "output_current": { "name": "Output current" },
+      "output_active_power": { "name": "Output active power" },
+      "output_load_percentage": { "name": "Output load" },
+      "battery_voltage": { "name": "Battery voltage" },
+      "battery_current": { "name": "Battery current" },
+      "battery_capacity": { "name": "Battery capacity" },
+      "pv_voltage": { "name": "PV voltage" },
+      "pv_charging_current": { "name": "PV charging current" },
+      "pv_power": { "name": "PV power" },
+      "pv_temperature": { "name": "PV temperature" },
+      "charger_temperature": { "name": "Charger temperature" },
+      "ambient_temperature": { "name": "Ambient temperature" },
+      "battery_type": { "name": "Battery type" },
+      "battery_cutoff_voltage": { "name": "Battery cutoff voltage" },
+      "battery_alarm_voltage": { "name": "Battery alarm voltage" },
+      "raw_payloads": { "name": "Raw payloads" }
+    },
+    "select": {
+      "output_source_priority": { "name": "Output source priority" },
+      "charger_source_priority": { "name": "Charger source priority" },
+      "battery_type": { "name": "Battery type" },
+      "ac_input_range": { "name": "AC input range" }
+    },
+    "switch": {
+      "buzzer": { "name": "Buzzer" },
+      "bms_communication": { "name": "BMS communication" }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Send command",
+      "description": "Send a raw EyeBond G-ASCII command to the LVYUAN inverter. Commands are terminated with \\r automatically.",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "command": { "name": "Command" },
+        "expect_response": { "name": "Expect response" },
+        "refresh": { "name": "Refresh after command" }
+      }
+    },
+    "refresh": {
+      "name": "Refresh",
+      "description": "Force an immediate refresh of all LVYUAN sensors.",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" }
+      }
+    },
+    "set_output_source_priority": {
+      "name": "Set output source priority",
+      "description": "Set the inverter output source priority (Utility First, PV First, or PBG).",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "mode": { "name": "Mode" }
+      }
+    },
+    "set_charger_source_priority": {
+      "name": "Set charger source priority",
+      "description": "Set the inverter charger source priority.",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "mode": { "name": "Mode" }
+      }
+    },
+    "set_ac_input_range": {
+      "name": "Set AC input range",
+      "description": "Set the AC input voltage range (APL wide or UPS narrow).",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "mode": { "name": "Mode" }
+      }
+    },
+    "set_max_ac_charge_current": {
+      "name": "Set max AC charge current",
+      "description": "Set the maximum grid/utility charging current.",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "amps": { "name": "Amps" }
+      }
+    },
+    "set_max_total_charge_current": {
+      "name": "Set max total charge current",
+      "description": "Set the maximum total charging current.",
+      "fields": {
+        "config_entry_id": { "name": "Config entry ID" },
+        "amps": { "name": "Amps" }
+      }
+    }
+  }
+}

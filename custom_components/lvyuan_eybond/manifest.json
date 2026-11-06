@@ -1,0 +1,13 @@
+{
+  "domain": "lvyuan_eybond",
+  "name": "LVYUAN Inverter (EyeBond G-ASCII)",
+  "codeowners": ["@SitifDm"],
+  "config_flow": true,
+  "documentation": "https://github.com/SitifDm/lvyuan_eybond",
+  "issue_tracker": "https://github.com/SitifDm/lvyuan_eybond/issues",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "loggers": ["custom_components.lvyuan_eybond"],
+  "requirements": ["pyserial==3.5"],
+  "version": "1.0.0"
+}
