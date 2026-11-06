@@ -187,8 +187,7 @@ The integration creates the following entity groups:
     ├── switch.py            # Switch entities
     ├── brand/               # Brand icons for HA UI
     │   ├── icon.png         # 96x96 icon
-    │   ├── logo.png         # 512x512 logo
-    │   └── dark_icon.png    # 96x96 icon for dark theme
+    │   └── logo.png         # 512x512 logo
     └── translations/        # UI translations
         ├── en.json          # English translations
         └── ru.json          # Russian translations
