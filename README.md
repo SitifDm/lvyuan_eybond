@@ -72,14 +72,14 @@ Connect the wires from the cut USB cable to the RJ-45 keystone jack according to
 
 1. Ensure [HACS](https://hacs.xyz/) is installed in your Home Assistant.
 2. Go to **HACS** → **Integrations** → **⋮** (three dots in top right) → **Custom repositories**.
-3. Add this repository URL: `https://github.com/SitifDm/lvyuan_eybond`
+3. Add this repository URL: `https://github.com/SitifDm/lvyuan_eyebond`
 4. Select category **Integration**.
 5. Find **LVYUAN Inverter (EyeBond G-ASCII)** and click **Install**.
 6. Restart Home Assistant.
 
 ### Option B: Manual Installation
 
-1. Copy the `custom_components/lvyuan_eybond` folder to `<config_dir>/custom_components/` in your Home Assistant.
+1. Copy the `custom_components/lvyuan_eyebond` folder to `<config_dir>/custom_components/` in your Home Assistant.
 2. Restart Home Assistant.
 
 ## Configuration
