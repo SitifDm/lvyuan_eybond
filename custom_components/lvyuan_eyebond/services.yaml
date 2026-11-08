@@ -1,0 +1,32 @@
+send_command:
+  name: Send command
+  description: >-
+    Send a raw EyeBond G-ASCII command to the LVYUAN inverter.
+    Commands are sent as plain text terminated with \r (no CRC).
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text:
+    command:
+      required: true
+      example: GMOD
+      selector:
+        text:
+    expect_response:
+      default: true
+      selector:
+        boolean:
+    refresh:
+      default: false
+      selector:
+        boolean:
+
+refresh:
+  name: Refresh
+  description: Force an immediate refresh of all LVYUAN sensors.
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        text:
