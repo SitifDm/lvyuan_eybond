@@ -13,14 +13,14 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .client import LvyuanError
 from .client_serial import LvyuanSerialClient
 from .const import (
-    EYBOND_MODE_CODES,
-    EYBOND_OUTPUT_PRIORITY_REVERSE,
-    EYBOND_OUTPUT_MODE_REVERSE,
-    EYBOND_BATTERY_TYPE_REVERSE,
-    EYBOND_CHARGER_PRIORITY_REVERSE,
-    EYBOND_CHARGING_METHOD_REVERSE,
-    EYBOND_OUTPUT_VOLTAGE_REVERSE,
-    EYBOND_AC_INPUT_RANGE_REVERSE,
+    EYEBOND_MODE_CODES,
+    EYEBOND_OUTPUT_PRIORITY_REVERSE,
+    EYEBOND_OUTPUT_MODE_REVERSE,
+    EYEBOND_BATTERY_TYPE_REVERSE,
+    EYEBOND_CHARGER_PRIORITY_REVERSE,
+    EYEBOND_CHARGING_METHOD_REVERSE,
+    EYEBOND_OUTPUT_VOLTAGE_REVERSE,
+    EYEBOND_AC_INPUT_RANGE_REVERSE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class LvyuanRuntimeData:
     coordinator: "LvyuanCoordinator"
 
 
-def parse_eybond_response(response: str) -> list[str]:
+def parse_eyebond_response(response: str) -> list[str]:
     """Parse EyeBond response like '(val1 val2 val3' or '#val1 val2' into a list."""
     if not response:
         return []
@@ -84,7 +84,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _async_setup(self) -> None:
         """Fetch static data quickly without blocking Home Assistant startup."""
-        self.serial = "lvyuan_eybond"
+        self.serial = "lvyuan_eyebond"
         _LOGGER.debug("Lvyuan coordinator successfully initialized in fast mode")
 
     async def _async_update_data(self) -> dict[str, Any]:
@@ -119,16 +119,16 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             await asyncio.sleep(0.05)
 
             # Парсинг быстрых данных
-            hmod_vals = parse_eybond_response(hmod)
+            hmod_vals = parse_eyebond_response(hmod)
             mode_code = hmod_vals[0] if hmod_vals else "X"
             
-            hbat_vals = parse_eybond_response(hbat)
-            hpv_vals = parse_eybond_response(hpv)
-            hop_vals = parse_eybond_response(hop)
-            hpd_vals = parse_eybond_response(hpd)
-            hws_vals = parse_eybond_response(hws)
-            hgrid_vals = parse_eybond_response(hgrid)
-            hq1_vals = parse_eybond_response(hq1)
+            hbat_vals = parse_eyebond_response(hbat)
+            hpv_vals = parse_eyebond_response(hpv)
+            hop_vals = parse_eyebond_response(hop)
+            hpd_vals = parse_eyebond_response(hpd)
+            hws_vals = parse_eyebond_response(hws)
+            hgrid_vals = parse_eyebond_response(hgrid)
+            hq1_vals = parse_eyebond_response(hq1)
 
             # === МЕДЛЕННЫЙ ЦИКЛ (выполняется 1 раз в 60 циклов = ~5 минут) ===
             slow_data = self.data.get("slow_data") if self.data else None
@@ -141,7 +141,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             # === СБОРКА РЕЗУЛЬТАТА ===
             result: dict[str, Any] = {
                 "operating_mode": mode_code,
-                "operating_mode_name": EYBOND_MODE_CODES.get(mode_code, "unknown"),
+                "operating_mode_name": EYEBOND_MODE_CODES.get(mode_code, "unknown"),
                 "slow_data": slow_data or {},
                 "raw": {
                     "GMOD": hmod, "GBAT": hbat, "GPV": hpv, "GOP": hop,
@@ -156,7 +156,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 result["battery_current"] = safe_float(hbat_vals[1])
                 if "settings" not in (slow_data or {}):
                     result["battery_type_code"] = hbat_vals[2]
-                    result["battery_type_name"] = EYBOND_BATTERY_TYPE_REVERSE.get(hbat_vals[2], "unknown")
+                    result["battery_type_name"] = EYEBOND_BATTERY_TYPE_REVERSE.get(hbat_vals[2], "unknown")
                 result["battery_cutoff_voltage"] = safe_float(hbat_vals[3])
                 result["battery_alarm_voltage"] = safe_float(hbat_vals[4])
 
@@ -274,7 +274,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             try:
                 resp = await self.client.send_command(cmd)
                 raw_slow[cmd] = resp
-                vals = parse_eybond_response(resp)
+                vals = parse_eyebond_response(resp)
                 if vals:
                     settings[key] = type_fn(vals[0])
                 await asyncio.sleep(0.05)
@@ -310,15 +310,15 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         # Маппинги
         if "battery_type_code" in settings:
-            slow_result["battery_type_name"] = EYBOND_BATTERY_TYPE_REVERSE.get(settings["battery_type_code"], "unknown")
+            slow_result["battery_type_name"] = EYEBOND_BATTERY_TYPE_REVERSE.get(settings["battery_type_code"], "unknown")
         if "charger_source_priority_code" in settings:
-            slow_result["charger_source_priority_name"] = EYBOND_CHARGER_PRIORITY_REVERSE.get(settings["charger_source_priority_code"], "unknown")
+            slow_result["charger_source_priority_name"] = EYEBOND_CHARGER_PRIORITY_REVERSE.get(settings["charger_source_priority_code"], "unknown")
         if "output_source_priority_code" in settings:
-            slow_result["output_source_priority_name"] = EYBOND_OUTPUT_PRIORITY_REVERSE.get(settings["output_source_priority_code"], "unknown")
+            slow_result["output_source_priority_name"] = EYEBOND_OUTPUT_PRIORITY_REVERSE.get(settings["output_source_priority_code"], "unknown")
         if "output_mode_code" in settings:
-            slow_result["output_mode_name"] = EYBOND_OUTPUT_MODE_REVERSE.get(settings["output_mode_code"], "unknown")
+            slow_result["output_mode_name"] = EYEBOND_OUTPUT_MODE_REVERSE.get(settings["output_mode_code"], "unknown")
         if "ac_input_range_code" in settings:
-            slow_result["ac_input_range_name"] = EYBOND_AC_INPUT_RANGE_REVERSE.get(settings["ac_input_range_code"], "unknown")
+            slow_result["ac_input_range_name"] = EYEBOND_AC_INPUT_RANGE_REVERSE.get(settings["ac_input_range_code"], "unknown")
 
         slow_result["raw_slow"] = raw_slow
 
@@ -327,13 +327,13 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     # --- Вспомогательные парсеры для медленных данных ---
     def _parse_svfw(self, payload: str) -> dict[str, Any] | None:
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if len(vals) >= 2:
             return {"software_version": vals[0], "software_date": vals[1].replace("(", "")}
         return None
 
     def _parse_gtmp(self, payload: str) -> dict[str, Any] | None:
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if len(vals) >= 3:
             return {
                 "pv_temperature": safe_float(vals[0]),
@@ -343,7 +343,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return None
 
     def _parse_gchg(self, payload: str) -> dict[str, Any] | None:
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if len(vals) >= 18:
             return {
                 "constant_voltage_charging_voltage": safe_float(vals[6]),
@@ -356,7 +356,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return None
 
     def _parse_fan(self, payload: str) -> dict[str, Any] | None:
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if len(vals) >= 5:
             return {
                 "fan_speed_percentage": safe_float(vals[0]),
@@ -369,7 +369,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     def _parse_te(self, payload: str) -> dict[str, Any] | None:
         """Парсинг буквенных флагов TE? с сохранением сырой строки для switch.py"""
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if vals:
             flags_str = vals[0]
             return {
@@ -380,7 +380,7 @@ class LvyuanCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return None
 
     def _parse_ginv(self, payload: str) -> dict[str, Any] | None:
-        vals = parse_eybond_response(payload)
+        vals = parse_eyebond_response(payload)
         if len(vals) >= 3:
             return {
                 "inverter_voltage": safe_float(vals[0]),
